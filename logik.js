@@ -12,31 +12,31 @@
 
 export const FELD_BREITE = 480;
 export const FELD_HOEHE = 560;
-export const WAND = 10;                     // Dicke der Seiten- und Deckenwand
-export const ANZEIGE_HOEHE = 30;            // Streifen oben für Punkte/Level (wie am Automaten)
-export const DECKE = ANZEIGE_HOEHE + WAND;  // Unterkante der Deckenwand = oberer Spielrand
+export const WAND = 10; // Dicke der Seiten- und Deckenwand
+export const ANZEIGE_HOEHE = 30; // Streifen oben für Punkte/Level (wie am Automaten)
+export const DECKE = ANZEIGE_HOEHE + WAND; // Unterkante der Deckenwand = oberer Spielrand
 
 // Steinraster: 12 Spalten
 export const SPALTEN = 12;
 export const STEIN_BREITE = 36;
 export const STEIN_HOEHE = 14;
 export const STEIN_LUECKE = 2;
-export const STEIN_OBEN = DECKE + 34;       // Abstand der obersten Steinreihe zur Decke
+export const STEIN_OBEN = DECKE + 34; // Abstand der obersten Steinreihe zur Decke
 
 // Schläger
 export const SCHLAEGER_BREITE = 76;
 export const SCHLAEGER_HOEHE = 10;
 export const SCHLAEGER_Y = FELD_HOEHE - 46;
-export const SCHRUMPF_FAKTOR = 0.6;         // nach dem ersten Deckentreffer
-export const BREIT_FAKTOR = 1.5;            // Power-up "Breit"
+export const SCHRUMPF_FAKTOR = 0.6; // nach dem ersten Deckentreffer
+export const BREIT_FAKTOR = 1.5; // Power-up "Breit"
 
 // Ball und Tempo
 export const BALL_RADIUS = 5;
-export const TEMPO_START = 280;             // px/s in Level 1
+export const TEMPO_START = 280; // px/s in Level 1
 export const TEMPO_PRO_LEVEL = 16;
 export const TEMPO_MAX = 600;
-export const STUFEN_FAKTOR = 0.09;          // +9 % je Tempo-Stufe
-export const LANGSAM_FAKTOR = 0.7;          // Power-up "Langsam"
+export const STUFEN_FAKTOR = 0.09; // +9 % je Tempo-Stufe
+export const LANGSAM_FAKTOR = 0.7; // Power-up "Langsam"
 export const MAX_ABPRALL_GRAD = 60;
 export const MIN_VERTIKAL = 0.28;
 export const MAX_TEILSCHRITT = 4;
@@ -63,42 +63,135 @@ export const STEINARTEN = {
    Die Karten wiederholen sich, der Ball wird von Level zu Level
    schneller. */
 export const LEVEL = [
-  { name: "Klassik", karte: [
-    "rrrrrrrrrrrr", "rrrrrrrrrrrr", "oooooooooooo", "oooooooooooo",
-    "gggggggggggg", "gggggggggggg", "yyyyyyyyyyyy", "yyyyyyyyyyyy"] },
-  { name: "Pyramide", karte: [
-    ".....rr.....", "....rrrr....", "...oooooo...", "..oooooooo..",
-    ".gggggggggg.", "gggggggggggg", "yyyyyyyyyyyy"] },
-  { name: "Lücken", karte: [
-    "r.r.r.r.r.r.", ".r.r.r.r.r.r", "o.o.o.o.o.o.", ".o.o.o.o.o.o",
-    "g.g.g.g.g.g.", ".g.g.g.g.g.g", "y.y.y.y.y.y.", ".y.y.y.y.y.y"] },
-  { name: "Festung", karte: [
-    "HHHHHHHHHHHH", "H..........H", "H.rrrrrrrr.H", "H.oooooooo.H",
-    "H.gggggggg.H", "H..........H", "yyyy....yyyy"] },
-  { name: "Säulen", karte: [
-    "rr.#rrrr#.rr", "oo.#oooo#.oo", "gg.#gggg#.gg", "yy.#yyyy#.yy",
-    "yy........yy"] },
-  { name: "Raute", karte: [
-    ".....HH.....", "....rrrr....", "...oooooo...", "..gggggggg..",
-    "...yyyyyy...", "....oooo....", ".....rr....."] },
-  { name: "Wellen", karte: [
-    "rr....rr....", "oorr..oorr..", "..oorr..oorr", "gg..oogg..oo",
-    "yygg..yygg..", "..yygg..yygg", "....yy....yy"] },
-  { name: "Tore", karte: [
-    "rrrrrrrrrrrr", "oooooooooooo", "##...##...##", "gggggggggggg",
-    "yyyyyyyyyyyy", "#....##....#"] },
-  { name: "Panzer", karte: [
-    "HrHrHrHrHrHr", "rHrHrHrHrHrH", "HoHoHoHoHoHo", "gHgHgHgHgHgH",
-    "yyyyyyyyyyyy"] },
-  { name: "Herz", karte: [
-    "..rr....rr..", ".rrrr..rrrr.", "rrrrrrrrrrrr", "oooooooooooo",
-    ".gggggggggg.", "..gggggggg..", "...yyyyyy...", "....yyyy....", ".....yy....."] },
-  { name: "Labyrinth", karte: [
-    "#rrrrrrrrrr#", "#oooooooooo#", "##..####..##", "gggggggggggg",
-    "#..##..##..#", "yyyyyyyyyyyy"] },
-  { name: "Finale", karte: [
-    "XXXXXXXXXXXX", "rrrrrrrrrrrr", "#HHH#..#HHH#", "oooooooooooo",
-    "gg##gggg##gg", "yyyyyyyyyyyy"] },
+  {
+    name: "Klassik",
+    karte: [
+      "rrrrrrrrrrrr",
+      "rrrrrrrrrrrr",
+      "oooooooooooo",
+      "oooooooooooo",
+      "gggggggggggg",
+      "gggggggggggg",
+      "yyyyyyyyyyyy",
+      "yyyyyyyyyyyy",
+    ],
+  },
+  {
+    name: "Pyramide",
+    karte: [
+      ".....rr.....",
+      "....rrrr....",
+      "...oooooo...",
+      "..oooooooo..",
+      ".gggggggggg.",
+      "gggggggggggg",
+      "yyyyyyyyyyyy",
+    ],
+  },
+  {
+    name: "Lücken",
+    karte: [
+      "r.r.r.r.r.r.",
+      ".r.r.r.r.r.r",
+      "o.o.o.o.o.o.",
+      ".o.o.o.o.o.o",
+      "g.g.g.g.g.g.",
+      ".g.g.g.g.g.g",
+      "y.y.y.y.y.y.",
+      ".y.y.y.y.y.y",
+    ],
+  },
+  {
+    name: "Festung",
+    karte: [
+      "HHHHHHHHHHHH",
+      "H..........H",
+      "H.rrrrrrrr.H",
+      "H.oooooooo.H",
+      "H.gggggggg.H",
+      "H..........H",
+      "yyyy....yyyy",
+    ],
+  },
+  {
+    name: "Säulen",
+    karte: ["rr.#rrrr#.rr", "oo.#oooo#.oo", "gg.#gggg#.gg", "yy.#yyyy#.yy", "yy........yy"],
+  },
+  {
+    name: "Raute",
+    karte: [
+      ".....HH.....",
+      "....rrrr....",
+      "...oooooo...",
+      "..gggggggg..",
+      "...yyyyyy...",
+      "....oooo....",
+      ".....rr.....",
+    ],
+  },
+  {
+    name: "Wellen",
+    karte: [
+      "rr....rr....",
+      "oorr..oorr..",
+      "..oorr..oorr",
+      "gg..oogg..oo",
+      "yygg..yygg..",
+      "..yygg..yygg",
+      "....yy....yy",
+    ],
+  },
+  {
+    name: "Tore",
+    karte: [
+      "rrrrrrrrrrrr",
+      "oooooooooooo",
+      "##...##...##",
+      "gggggggggggg",
+      "yyyyyyyyyyyy",
+      "#....##....#",
+    ],
+  },
+  {
+    name: "Panzer",
+    karte: ["HrHrHrHrHrHr", "rHrHrHrHrHrH", "HoHoHoHoHoHo", "gHgHgHgHgHgH", "yyyyyyyyyyyy"],
+  },
+  {
+    name: "Herz",
+    karte: [
+      "..rr....rr..",
+      ".rrrr..rrrr.",
+      "rrrrrrrrrrrr",
+      "oooooooooooo",
+      ".gggggggggg.",
+      "..gggggggg..",
+      "...yyyyyy...",
+      "....yyyy....",
+      ".....yy.....",
+    ],
+  },
+  {
+    name: "Labyrinth",
+    karte: [
+      "#rrrrrrrrrr#",
+      "#oooooooooo#",
+      "##..####..##",
+      "gggggggggggg",
+      "#..##..##..#",
+      "yyyyyyyyyyyy",
+    ],
+  },
+  {
+    name: "Finale",
+    karte: [
+      "XXXXXXXXXXXX",
+      "rrrrrrrrrrrr",
+      "#HHH#..#HHH#",
+      "oooooooooooo",
+      "gg##gggg##gg",
+      "yyyyyyyyyyyy",
+    ],
+  },
 ];
 
 /** Karte des Levels (ab Level 13 wiederholen sich die Karten). */
@@ -122,7 +215,7 @@ export function steineAusKarte(karte) {
         h: STEIN_HOEHE,
         zeichen,
         punkte: art.punkte,
-        rest: art.treffer,          // verbleibende Treffer
+        rest: art.treffer, // verbleibende Treffer
         fest: Boolean(art.fest),
         band: art.band ?? null,
         lebt: true,
@@ -163,8 +256,14 @@ export function tempoNachTreffer(zustand, stein) {
   const vorher = zustand.stufe;
   zustand.treffer += 1;
   if (zustand.treffer === 4 || zustand.treffer === 12) zustand.stufe += 1;
-  if (stein.band === 1 && !zustand.orangeErreicht) { zustand.orangeErreicht = true; zustand.stufe += 1; }
-  if (stein.band === 0 && !zustand.rotErreicht) { zustand.rotErreicht = true; zustand.stufe += 1; }
+  if (stein.band === 1 && !zustand.orangeErreicht) {
+    zustand.orangeErreicht = true;
+    zustand.stufe += 1;
+  }
+  if (stein.band === 0 && !zustand.rotErreicht) {
+    zustand.rotErreicht = true;
+    zustand.stufe += 1;
+  }
   return zustand.stufe > vorher;
 }
 
@@ -177,7 +276,7 @@ export function begrenze(wert, min, max) {
 /** Abprallwinkel am Schläger: Mitte = senkrecht, Rand = flach (±60°). */
 export function abprallWinkel(ballX, schlaegerMitte, schlaegerBreite, maxGrad = MAX_ABPRALL_GRAD) {
   const t = begrenze((ballX - schlaegerMitte) / (schlaegerBreite / 2), -1, 1);
-  return t * (maxGrad * Math.PI) / 180;
+  return (t * (maxGrad * Math.PI)) / 180;
 }
 
 /** Winkel (von der Senkrechten) und Tempo in vx/vy umrechnen. */
@@ -218,7 +317,8 @@ export function findeStein(ball, steine) {
     if (!stein.lebt) continue;
     const treffer = kollisionBallStein(ball, stein);
     if (!treffer) continue;
-    const abstand = (ball.x - (stein.x + stein.b / 2)) ** 2 + (ball.y - (stein.y + stein.h / 2)) ** 2;
+    const abstand =
+      (ball.x - (stein.x + stein.b / 2)) ** 2 + (ball.y - (stein.y + stein.h / 2)) ** 2;
     if (abstand < besterAbstand) {
       besterAbstand = abstand;
       bester = { stein, achse: treffer.achse };
@@ -229,10 +329,12 @@ export function findeStein(ball, steine) {
 
 export function trifftSchlaeger(ball, s) {
   if (ball.vy <= 0) return false;
-  return ball.y + ball.r >= s.y
-    && ball.y <= s.y + s.h / 2
-    && ball.x + ball.r >= s.x - s.b / 2
-    && ball.x - ball.r <= s.x + s.b / 2;
+  return (
+    ball.y + ball.r >= s.y &&
+    ball.y <= s.y + s.h / 2 &&
+    ball.x + ball.r >= s.x - s.b / 2 &&
+    ball.x - ball.r <= s.x + s.b / 2
+  );
 }
 
 /**
@@ -255,8 +357,15 @@ export function bewegeBall(welt, ball, dt) {
     ball.y += ball.vy * teilDt;
 
     let wand = false;
-    if (ball.x - ball.r < WAND) { ball.x = WAND + ball.r; ball.vx = Math.abs(ball.vx); wand = true; }
-    else if (ball.x + ball.r > FELD_BREITE - WAND) { ball.x = FELD_BREITE - WAND - ball.r; ball.vx = -Math.abs(ball.vx); wand = true; }
+    if (ball.x - ball.r < WAND) {
+      ball.x = WAND + ball.r;
+      ball.vx = Math.abs(ball.vx);
+      wand = true;
+    } else if (ball.x + ball.r > FELD_BREITE - WAND) {
+      ball.x = FELD_BREITE - WAND - ball.r;
+      ball.vx = -Math.abs(ball.vx);
+      wand = true;
+    }
     if (ball.y - ball.r < DECKE) {
       ball.y = DECKE + ball.r;
       ball.vy = Math.abs(ball.vy);
@@ -270,9 +379,12 @@ export function bewegeBall(welt, ball, dt) {
 
     if (trifftSchlaeger(ball, schlaeger)) {
       ball.y = schlaeger.y - ball.r;
-      Object.assign(ball, richtungAusWinkel(abprallWinkel(ball.x, schlaeger.x, schlaeger.b), welt.tempo));
+      Object.assign(
+        ball,
+        richtungAusWinkel(abprallWinkel(ball.x, schlaeger.x, schlaeger.b), welt.tempo),
+      );
       ereignisse.push({ typ: "schlaeger" });
-      return ereignisse;      // Rest des Frames verfällt: Das Spiel darf den Ball festhalten (Kleben)
+      return ereignisse; // Rest des Frames verfällt: Das Spiel darf den Ball festhalten (Kleben)
     }
 
     if (!steinGetroffen) {
@@ -283,7 +395,10 @@ export function bewegeBall(welt, ball, dt) {
         let zerstoert = false;
         if (!stein.fest) {
           stein.rest -= 1;
-          if (stein.rest <= 0) { stein.lebt = false; zerstoert = true; }
+          if (stein.rest <= 0) {
+            stein.lebt = false;
+            zerstoert = true;
+          }
         }
         if (achse === "seite") {
           const links = ball.x < stein.x + stein.b / 2;
@@ -319,7 +434,7 @@ export const POWERUPS = {
   "+": { name: "Extraleben", dauer: 0, gewicht: 6 },
 };
 export const POWERUP_CHANCE = 0.13;
-export const POWERUP_TEMPO = 120;   // Fallgeschwindigkeit px/s
+export const POWERUP_TEMPO = 120; // Fallgeschwindigkeit px/s
 
 /** Würfelt, ob und welches Power-up ein zerstörter Stein freigibt. */
 export function powerupWuerfeln(zufall) {
@@ -335,6 +450,10 @@ export function powerupWuerfeln(zufall) {
 
 /** Fängt der Schläger die fallende Kapsel (24 x 10 px, Mitte x/y)? */
 export function kapselGefangen(kapsel, s) {
-  return kapsel.y + 5 >= s.y && kapsel.y - 5 <= s.y + s.h
-    && kapsel.x + 12 >= s.x - s.b / 2 && kapsel.x - 12 <= s.x + s.b / 2;
+  return (
+    kapsel.y + 5 >= s.y &&
+    kapsel.y - 5 <= s.y + s.h &&
+    kapsel.x + 12 >= s.x - s.b / 2 &&
+    kapsel.x - 12 <= s.x + s.b / 2
+  );
 }

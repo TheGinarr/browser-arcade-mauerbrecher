@@ -1,62 +1,179 @@
 <!doctype html>
 <html lang="de">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#07070f">
-  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./assets/style.css">
-  <title>Mauerbrecher · Browser-Arcade</title>
-  <meta name="description" content="Mauerbrecher: Schläger, Ball und Steine im Look der späten 70er. 12 handgebaute Level, harte Steine, Power-ups und Mehrfachball. Mit Maus, Tastatur oder am Handy spielbar.">
-</head>
-<body style="--ak:var(--pink)">
-  <div class="raster" aria-hidden="true"></div>
-  <a class="skip-link" href="#main">Zum Inhalt springen</a>
-  <header class="kopf"><nav class="container nav" aria-label="Hauptnavigation">
-    <a class="marke" href="./"><span class="logo">▶</span>GAMES</a>
-    <div class="nav-links"><a href="./impressum.html">Impressum</a><a href="./datenschutz.html">Datenschutz</a></div>
-  </nav></header>
-  <main id="main" class="container">
-    <div class="spiel-kopf"><div><h1>MAUERBRECHER</h1><p class="unterzeile">Schläger, Ball, Steine: Leg die Mauer in Schutt, Level für Level.</p></div></div>
-    <div class="hud">
-      <div class="hud-feld"><div class="label">Punkte</div><div class="wert" id="hud-punkte">0</div></div>
-      <div class="hud-feld"><div class="label">Leben</div><div class="wert" id="hud-leben">3</div></div>
-      <div class="hud-feld"><div class="label">Level</div><div class="wert" id="hud-level">1</div></div>
-      <div class="hud-feld"><div class="label">Rekord</div><div class="wert" id="hud-rekord">0</div></div>
-    </div>
-    <div class="buehne">
-      <!-- Logisch 480x560 Pixel. Oben ein Anzeigestreifen, darunter Wände und Spielfeld. -->
-      <canvas id="leinwand" width="480" height="560" role="img"
-              aria-label="Mauerbrecher-Spielfeld: oben farbige Steinreihen, seitlich graue Wände, unten der Schläger mit dem Ball"
-              style="max-width:560px;margin-inline:auto;image-rendering:pixelated"></canvas>
-    </div>
-    <p class="steuerung"><span class="nur-tastatur">Schläger mit der Maus bewegen oder mit <kbd>←</kbd> <kbd>→</kbd> bzw. <kbd>A</kbd> <kbd>D</kbd> · <kbd>Leertaste</kbd> oder Klick schießt den Ball ab (und löst ihn beim Klebeschläger) · <kbd>P</kbd> Pause.</span><span class="nur-touch">Finger auf dem Feld verschieben oder die Pfeiltasten unten halten. Tippen aufs Feld oder die runde Taste schießt den Ball ab und löst ihn beim Klebeschläger.</span></p>
-    <section style="max-width:420px;margin-top:36px"><h2 style="font-family:var(--pixel);font-weight:400;font-size:.85rem">Lokale Top 3</h2><div id="topliste"></div>
-      <button class="knopf" id="reset" style="margin-top:10px">Spielstand zurücksetzen</button></section>
-    <section class="lernbox"><details open><summary>Anleitung &amp; Regeln</summary>
-      <p><strong>Ziel:</strong> Räume alle zerstörbaren Steine ab, ohne den Ball unten durchrutschen zu lassen. Dann geht es ins nächste Level.</p>
-      <ul>
-        <li>Farbbänder: rot 70, orange 50, grün 30, gelb 10 Punkte. Silberne Steine brauchen 2 Treffer (60 Punkte), goldene mit Nieten 3 Treffer (100 Punkte). Graue, schraffierte Steine sind unzerstörbar.</li>
-        <li>Der Ball wird schneller: nach dem 4. und 12. Treffer und beim ersten Treffer im orangen und im roten Band.</li>
-        <li>Trifft der Ball zum ersten Mal die Decke, schrumpft dein Schläger. Erst im nächsten Level oder nach einem Ballverlust ist er wieder normal groß.</li>
-        <li>Wo du den Ball triffst, bestimmt den Winkel: Mitte = steil, Rand = flach.</li>
-        <li>Manche Steine lassen eine Kapsel fallen. Fang sie mit dem Schläger: <strong>B</strong> breiter Schläger, <strong>M</strong> Mehrfachball, <strong>L</strong> langsamer Ball, <strong>K</strong> Klebeschläger (Ball bleibt hängen, Leertaste/Tippen löst ihn), <strong>+</strong> Extraleben.</li>
-        <li>12 feste Level, danach geht es endlos weiter, immer etwas schneller. Jedes erreichte Level lässt sich unten direkt anwählen.</li>
-        <li>3 Leben. Jedes geschaffte Level bringt 200 Bonuspunkte.</li>
-      </ul>
-    </details></section>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#07070f" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./assets/style.css" />
+    <title>Mauerbrecher · Browser-Arcade</title>
+    <meta
+      name="description"
+      content="Mauerbrecher: Schläger, Ball und Steine im Look der späten 70er. 12 handgebaute Level, harte Steine, Power-ups und Mehrfachball. Mit Maus, Tastatur oder am Handy spielbar."
+    />
+  </head>
+  <body style="--ak: var(--pink)">
+    <div class="raster" aria-hidden="true"></div>
+    <a class="skip-link" href="#main">Zum Inhalt springen</a>
+    <header class="kopf">
+      <nav class="container nav" aria-label="Hauptnavigation">
+        <a class="marke" href="./"><span class="logo">▶</span>GAMES</a>
+        <div class="nav-links">
+          <a href="./impressum.html">Impressum</a><a href="./datenschutz.html">Datenschutz</a>
+        </div>
+      </nav>
+    </header>
+    <main id="main" class="container">
+      <div class="spiel-kopf">
+        <div>
+          <h1>MAUERBRECHER</h1>
+          <p class="unterzeile">
+            Schläger, Ball, Steine: Leg die Mauer in Schutt, Level für Level.
+          </p>
+        </div>
+      </div>
+      <div class="hud">
+        <div class="hud-feld">
+          <div class="label">Punkte</div>
+          <div class="wert" id="hud-punkte">0</div>
+        </div>
+        <div class="hud-feld">
+          <div class="label">Leben</div>
+          <div class="wert" id="hud-leben">3</div>
+        </div>
+        <div class="hud-feld">
+          <div class="label">Level</div>
+          <div class="wert" id="hud-level">1</div>
+        </div>
+        <div class="hud-feld">
+          <div class="label">Rekord</div>
+          <div class="wert" id="hud-rekord">0</div>
+        </div>
+      </div>
+      <div class="buehne">
+        <!-- Logisch 480x560 Pixel. Oben ein Anzeigestreifen, darunter Wände und Spielfeld. -->
+        <canvas
+          id="leinwand"
+          width="480"
+          height="560"
+          role="img"
+          aria-label="Mauerbrecher-Spielfeld: oben farbige Steinreihen, seitlich graue Wände, unten der Schläger mit dem Ball"
+          style="max-width: 560px; margin-inline: auto; image-rendering: pixelated"
+        ></canvas>
+      </div>
+      <p class="steuerung">
+        <span class="nur-tastatur"
+          >Schläger mit der Maus bewegen oder mit <kbd>←</kbd> <kbd>→</kbd> bzw. <kbd>A</kbd>
+          <kbd>D</kbd> · <kbd>Leertaste</kbd> oder Klick schießt den Ball ab (und löst ihn beim
+          Klebeschläger) · <kbd>P</kbd> Pause.</span
+        ><span class="nur-touch"
+          >Finger auf dem Feld verschieben oder die Pfeiltasten unten halten. Tippen aufs Feld oder
+          die runde Taste schießt den Ball ab und löst ihn beim Klebeschläger.</span
+        >
+      </p>
+      <section style="max-width: 420px; margin-top: 36px">
+        <h2 style="font-family: var(--pixel); font-weight: 400; font-size: 0.85rem">
+          Lokale Top 3
+        </h2>
+        <div id="topliste"></div>
+        <button class="knopf" id="reset" style="margin-top: 10px">Spielstand zurücksetzen</button>
+      </section>
+      <section class="lernbox">
+        <details open>
+          <summary>Anleitung &amp; Regeln</summary>
+          <p>
+            <strong>Ziel:</strong> Räume alle zerstörbaren Steine ab, ohne den Ball unten
+            durchrutschen zu lassen. Dann geht es ins nächste Level.
+          </p>
+          <ul>
+            <li>
+              Farbbänder: rot 70, orange 50, grün 30, gelb 10 Punkte. Silberne Steine brauchen 2
+              Treffer (60 Punkte), goldene mit Nieten 3 Treffer (100 Punkte). Graue, schraffierte
+              Steine sind unzerstörbar.
+            </li>
+            <li>
+              Der Ball wird schneller: nach dem 4. und 12. Treffer und beim ersten Treffer im
+              orangen und im roten Band.
+            </li>
+            <li>
+              Trifft der Ball zum ersten Mal die Decke, schrumpft dein Schläger. Erst im nächsten
+              Level oder nach einem Ballverlust ist er wieder normal groß.
+            </li>
+            <li>Wo du den Ball triffst, bestimmt den Winkel: Mitte = steil, Rand = flach.</li>
+            <li>
+              Manche Steine lassen eine Kapsel fallen. Fang sie mit dem Schläger:
+              <strong>B</strong> breiter Schläger, <strong>M</strong> Mehrfachball,
+              <strong>L</strong> langsamer Ball, <strong>K</strong> Klebeschläger (Ball bleibt
+              hängen, Leertaste/Tippen löst ihn), <strong>+</strong> Extraleben.
+            </li>
+            <li>
+              12 feste Level, danach geht es endlos weiter, immer etwas schneller. Jedes erreichte
+              Level lässt sich unten direkt anwählen.
+            </li>
+            <li>3 Leben. Jedes geschaffte Level bringt 200 Bonuspunkte.</li>
+          </ul>
+        </details>
+      </section>
 
-    <section class="lernbox"><details><summary>Wie funktioniert der Code?</summary>
-      <p><strong>Level als Textzeilen.</strong> Jedes Level steht in <code>logik.js</code> als Liste von Zeichenketten mit je 12 Zeichen, z. B. <code>"rr.#rrrr#.rr"</code>. <code>steineAusKarte</code> geht Zeile für Zeile und Zeichen für Zeichen durch und macht aus jedem Buchstaben einen Stein: Position aus Spalte und Reihe, Art aus der Tabelle <code>STEINARTEN</code>. Ein neues Level zu bauen heißt also nur, ein paar Zeilen Text zu schreiben.</p>
-      <p><strong>Treffer zählen statt sofort löschen.</strong> Jeder Stein hat <code>rest</code>, die verbleibenden Treffer. Ein normaler Stein startet mit 1, ein silberner mit 2, ein goldener mit 3, ein unzerstörbarer mit <code>Infinity</code>. Ein Level ist geschafft, wenn alle Steine weg sind, die <em>nicht</em> fest sind (<code>levelGeschafft</code>).</p>
-      <p><strong>Viele Bälle, eine Funktion.</strong> <code>bewegeBall(welt, ball, dt)</code> bewegt genau einen Ball und gibt Ereignisse zurück (Wand, Decke, Schläger, Stein, unten). Das Spiel ruft sie für jeden Ball in der Liste auf. Ein Ball, der unten herausfällt, wird aus der Liste entfernt. Erst wenn die Liste leer ist, ist ein Leben weg.</p>
-      <p><strong>Teilschritte gegen Tunneln.</strong> Ein schneller Ball legt pro Frame mehr Weg zurück, als ein Stein hoch ist. Ohne Gegenmaßnahme wäre er vorher über und nachher unter dem Stein, ohne ihn je berührt zu haben. Darum zerlegt <code>bewegeBall</code> jede Bewegung in Schritte von höchstens 4 Pixeln und prüft nach jedem.</p>
-      <p><strong>Tempo-Stufen.</strong> <code>effektivesTempo</code> rechnet aus Level-Grundtempo, Stufe (je +9 %) und Langsam-Power-up das aktuelle Tempo. Ändert sich etwas, normiert <code>normiereTempo</code> jeden fliegenden Ball auf die neue Geschwindigkeit, ohne seine Richtung zu ändern.</p>
-      <p><strong>Kleben.</strong> Ein klebender Ball speichert statt einer Geschwindigkeit nur seinen Versatz zur Schlägermitte (<code>klebt</code>). Jeden Frame wird er an die Schlägerposition plus Versatz gesetzt. Beim Lösen bestimmt derselbe Versatz den Abschusswinkel, genau wie beim Abprallen.</p>
-      <p><strong>Level freischalten.</strong> Gespeichert wird nur eine Zahl: das höchste erreichte Level (<code>assets/levelwahl.js</code>). Alle Level bis dahin sind in der Auswahl anklickbar. Topliste und Freischaltungen liegen nur im localStorage deines Browsers.</p>
-    </details></section>
-  </main>
-  <footer class="fuss"><div class="container fuss-in"><span>Browser-Arcade · Open Source</span><nav aria-label="Rechtliches"><a href="./impressum.html">Impressum</a><a href="./datenschutz.html">Datenschutz</a></nav></div></footer>
-  <script type="module" src="./game.js"></script>
-</body>
+      <section class="lernbox">
+        <details>
+          <summary>Wie funktioniert der Code?</summary>
+          <p>
+            <strong>Level als Textzeilen.</strong> Jedes Level steht in <code>logik.js</code> als
+            Liste von Zeichenketten mit je 12 Zeichen, z. B. <code>"rr.#rrrr#.rr"</code>.
+            <code>steineAusKarte</code> geht Zeile für Zeile und Zeichen für Zeichen durch und macht
+            aus jedem Buchstaben einen Stein: Position aus Spalte und Reihe, Art aus der Tabelle
+            <code>STEINARTEN</code>. Ein neues Level zu bauen heißt also nur, ein paar Zeilen Text
+            zu schreiben.
+          </p>
+          <p>
+            <strong>Treffer zählen statt sofort löschen.</strong> Jeder Stein hat <code>rest</code>,
+            die verbleibenden Treffer. Ein normaler Stein startet mit 1, ein silberner mit 2, ein
+            goldener mit 3, ein unzerstörbarer mit <code>Infinity</code>. Ein Level ist geschafft,
+            wenn alle Steine weg sind, die <em>nicht</em> fest sind (<code>levelGeschafft</code>).
+          </p>
+          <p>
+            <strong>Viele Bälle, eine Funktion.</strong>
+            <code>bewegeBall(welt, ball, dt)</code> bewegt genau einen Ball und gibt Ereignisse
+            zurück (Wand, Decke, Schläger, Stein, unten). Das Spiel ruft sie für jeden Ball in der
+            Liste auf. Ein Ball, der unten herausfällt, wird aus der Liste entfernt. Erst wenn die
+            Liste leer ist, ist ein Leben weg.
+          </p>
+          <p>
+            <strong>Teilschritte gegen Tunneln.</strong> Ein schneller Ball legt pro Frame mehr Weg
+            zurück, als ein Stein hoch ist. Ohne Gegenmaßnahme wäre er vorher über und nachher unter
+            dem Stein, ohne ihn je berührt zu haben. Darum zerlegt <code>bewegeBall</code> jede
+            Bewegung in Schritte von höchstens 4 Pixeln und prüft nach jedem.
+          </p>
+          <p>
+            <strong>Tempo-Stufen.</strong> <code>effektivesTempo</code> rechnet aus
+            Level-Grundtempo, Stufe (je +9 %) und Langsam-Power-up das aktuelle Tempo. Ändert sich
+            etwas, normiert <code>normiereTempo</code> jeden fliegenden Ball auf die neue
+            Geschwindigkeit, ohne seine Richtung zu ändern.
+          </p>
+          <p>
+            <strong>Kleben.</strong> Ein klebender Ball speichert statt einer Geschwindigkeit nur
+            seinen Versatz zur Schlägermitte (<code>klebt</code>). Jeden Frame wird er an die
+            Schlägerposition plus Versatz gesetzt. Beim Lösen bestimmt derselbe Versatz den
+            Abschusswinkel, genau wie beim Abprallen.
+          </p>
+          <p>
+            <strong>Level freischalten.</strong> Gespeichert wird nur eine Zahl: das höchste
+            erreichte Level (<code>assets/levelwahl.js</code>). Alle Level bis dahin sind in der
+            Auswahl anklickbar. Topliste und Freischaltungen liegen nur im localStorage deines
+            Browsers.
+          </p>
+        </details>
+      </section>
+    </main>
+    <footer class="fuss">
+      <div class="container fuss-in">
+        <span>Browser-Arcade · Open Source</span>
+        <nav aria-label="Rechtliches">
+          <a href="./impressum.html">Impressum</a><a href="./datenschutz.html">Datenschutz</a>
+        </nav>
+      </div>
+    </footer>
+    <script type="module" src="./game.js"></script>
+  </body>
 </html>
