@@ -3,9 +3,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="theme-color" content="#07070f" />
+    <meta name="theme-color" content="#07070f" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f2f3f9" media="(prefers-color-scheme: light)" />
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="./assets/style.css" />
+    <script src="./assets/thema.js?v=20261024"></script>
+    <link rel="stylesheet" href="./assets/style.css?v=20261024w" />
+    <link rel="stylesheet" href="./assets/automat.css?v=20261024" />
     <title>Mauerbrecher · Browser-Arcade</title>
     <meta
       name="description"
@@ -50,16 +53,41 @@
           <div class="wert" id="hud-rekord">0</div>
         </div>
       </div>
-      <div class="buehne">
-        <!-- Logisch 480x560 Pixel. Oben ein Anzeigestreifen, darunter Wände und Spielfeld. -->
-        <canvas
-          id="leinwand"
-          width="480"
-          height="560"
-          role="img"
-          aria-label="Mauerbrecher-Spielfeld: oben farbige Steinreihen, seitlich graue Wände, unten der Schläger mit dem Ball"
-          style="max-width: 560px; margin-inline: auto; image-rendering: pixelated"
-        ></canvas>
+      <div class="automat automat-mauerbrecher">
+        <div class="aut-kopf" aria-hidden="true">
+          <svg viewBox="0 0 64 64">
+            <g stroke="#000" stroke-width="1.5">
+              <rect x="4" y="6" width="18" height="9" fill="#ff5a36" />
+              <rect x="23" y="6" width="18" height="9" fill="#ffd23f" />
+              <rect x="42" y="6" width="18" height="9" fill="#46d160" />
+              <rect x="13" y="16" width="18" height="9" fill="#3dd6ff" />
+              <rect x="32" y="16" width="18" height="9" fill="#a35cff" />
+            </g>
+            <circle cx="36" cy="40" r="5" fill="#fff" stroke="#000" stroke-width="2" />
+            <rect
+              x="18"
+              y="52"
+              width="28"
+              height="6"
+              rx="3"
+              fill="#ddd"
+              stroke="#000"
+              stroke-width="2"
+            /></svg
+          ><span class="aut-titel">MAUERBRECHER<small>STEIN FÜR STEIN</small></span>
+        </div>
+        <div class="buehne">
+          <!-- Logisch 480x560 Pixel. Oben ein Anzeigestreifen, darunter Wände und Spielfeld. -->
+          <canvas
+            id="leinwand"
+            width="480"
+            height="560"
+            role="img"
+            aria-label="Mauerbrecher-Spielfeld: oben farbige Steinreihen, seitlich graue Wände, unten der Schläger mit dem Ball"
+            style="max-width: 560px; margin-inline: auto; image-rendering: pixelated"
+          ></canvas>
+        </div>
+        <div class="aut-muenze" aria-hidden="true"><span></span><span></span></div>
       </div>
       <p class="steuerung">
         <span class="nur-tastatur"
@@ -72,9 +100,7 @@
         >
       </p>
       <section style="max-width: 420px; margin-top: 36px">
-        <h2 style="font-family: var(--pixel); font-weight: 400; font-size: 0.85rem">
-          Lokale Top 3
-        </h2>
+        <h2 style="font-family: var(--pixel); font-weight: 400; font-size: 0.85rem">Topliste</h2>
         <div id="topliste"></div>
         <button class="knopf" id="reset" style="margin-top: 10px">Spielstand zurücksetzen</button>
       </section>
